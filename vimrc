@@ -149,7 +149,9 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 
 " ============ Tlist ================"
 
-"let Tlist_Ctags_Cmd="/opt/local/include/"
+if isWindows 
+    let Tlist_Ctags_Cmd="$HOME/vimfiles"
+endif
 "let Tlist_Auto_Open = 1
 "let Tlist_Auto_Highlight_Tag = 1
 "let Tlist_Inc_Winwidth=0
