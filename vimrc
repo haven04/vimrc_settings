@@ -1,14 +1,15 @@
-" Last edited: Dec 26. 2016
+" Last edited: Dec 27. 2016
 " clone this repository to $HOME/.vim (OSX) or $HOME/vimfiles (Windows) and
 " :PluginInstall
 
-let isWindows=has("win32") || has("win64") 
+let isWindows=has("win32") || has("win64")
+let isMac=has("gui_macvim") || has("macunix") || has("mac")
 
 "=======================Vundle settings=================================="
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-if isWindows 
+if isWindows
   set rtp+=~/vimfiles/bundle/Vundle.vim/
   let path='~/vimfiles/bundle'
   call vundle#begin(path)
@@ -20,67 +21,91 @@ endif
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
 
+" vim-scripts repos
+Plugin 'L9'
+
 "============ NerdTree ============
 " Open/Close    :NERDTreeToggle
 " CheatSheet    https://www.cheatography.com/stepk/cheat-sheets/vim-nerdtree/
 Plugin 'scrooloose/nerdtree'
+cabbrev ntt NERDTreeToggle
+map <silent> <C-k>b :NERDTreeToggle<CR>
 if !isWindows
   "Does not support windows
   Plugin 'Xuyuanp/nerdtree-git-plugin'
 endif
 let NERDTreeShowHidden=1
 
+"============ NERDCommenter ============
 "[count]<leader>c<space> |NERDComToggleComment|
+"[count]<leader>cc |NERDComComment| Comment out the current line or text selected in visual mode.
+"[count]<leader>cu |NERDComUncommentLine| Uncomments the selected line(s).
 Plugin 'The-NERD-Commenter'
+if isWindows
+  map <A-/> <leader>c<space>
+endif
+"if isMac
+  "map <T-/> <leader>c<space>
+"endif
 
-" ====================
-
+"============ Fugitive.vim ============
 Plugin 'tpope/vim-fugitive'
+":Git, :Gstatus, :Gcommit, :Gbrowse, :Gread, :Ggrep, :Gmove..
+
+"============ Easymotion ============
+" <leader><leader>wbhjkl
 Plugin 'Lokaltog/vim-easymotion'
-Plugin 'rstacruz/sparkup'
-" Plugin 'tpope/vim-rails.git'
-Plugin 'Raimondi/delimitMate'
-Plugin 'snipMate'
-Plugin 'taglist.vim'
+
+""============ A.vim ============
+" For C/C++, https://github.com/vim-scripts/a.vim
+" :A switches to the header file corresponding to the current file being edited (or vise versa)
+" :AS splits and switches
+" :AV vertical splits and switches
+Plugin 'a.vim'
+
+"============ vim-airline ============
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+let g:airline_theme='molokai'
+set laststatus=2
+
+"============ MatchIt ============
+"HTML/Latex TAG Matcher
+Plugin 'matchit.zip'
+"============ Tagbar ================"
+Plugin 'majutsushi/tagbar'
+
+if isWindows
+    let g:tagbar_ctags_bin='$HOME\vimfiles\ctags.exe'
+endif
+cabbrev tt TagbarToggle
+
+"============ Ultisnips ================"
+if has('python')
+  Plugin 'SirVer/ultisnips'
+  Plugin 'honza/vim-snippets'
+endif
+
+"============ Delimitmate ================"
+Plugin 'raimondi/delimitMate'
+
+"============ Sparkup ================"
+if has('python')
+  Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+endif
 
 "" Only for MAC
-if !isWindows
+if isMac
   "Plugin 'Valloric/YouCompleteMe'
 "   https://github.com/Valloric/YouCompleteMe#full-installation-guide
 "
-"   The way to compile 
+"   The way to compile
 "   cd ~/.vim/bundle/YouCompleteMe
 "   ./install.py --clang-completer --omnisharp-completer --gocode-completer
-"
-  Plugin 'Command-T'
 " cocoa
   Plugin 'b4winckler/vim-objc'
   Plugin 'cocoa.vim'
 endif
-
-" vim-scripts repos
-Plugin 'L9'
-
-""============ A.vim ============
-" For C/C++, https://github.com/vim-scripts/a.vim
-" :A switches to the header file corresponding to the current file being edited (or vise versa) 
-" :AS splits and switches 
-" :AV vertical splits and switches
-Plugin 'a.vim'
-
-"============ Lightline ============
-" customization: https://github.com/itchyny/lightline.vim
-Plugin 'itchyny/lightline.vim'
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
-set laststatus=2
-"===================================
-
-"============ MatchIt ============
-"HTML/Latex TAG Matcher
-Plugin 'matchit.zip' 
-"===================================
 
 call vundle#end()
 
@@ -98,19 +123,21 @@ filetype plugin indent on     " required!
 
 "======================================================================="
 
-set encoding=utf-8 
+set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,euc-kr,cp949
 set termencoding=utf-8
+let mapleader=' '
 
+let isColorSchemeAvailable=0
 if has("gui_running")
-  let applyColor=1
+  let isColorSchemeAvailable=1
 else
   set t_Co=256
   set background=dark
 endif
 
-" FOR WINDOWS 
+" FOR WINDOWS
 if isWindows
   set langmenu=en_US.utf-8
   set gfn=Consolas:h10
@@ -125,26 +152,28 @@ if isWindows
     set t_Co=256
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
-    let applyColor=1
+    let isColorSchemeAvailable=1
     nnoremap <Char-0x07F> <c-r>=Backspace()<CR>
     inoremap <Char-0x07f> <c-r>=Backspace()<CR>
+
     func! Backspace()
-      if col('.') == 1     
-	if line('.')  != 1       
-		return  "\<ESC>kA\<Del>"     
-	else       
-		return ""     
-	endif   
-      else     
-	return "\<Left>\<Del>"   
-      endif 
+      if col('.') == 1
+        if line('.')  != 1
+          return  "\<ESC>kA\<Del>"
+        else
+          return ""
+        endif
+      else
+        return "\<Left>\<Del>"
+      endif
     endfunc
   endif
+
 else
   set gfn=Menlo:h12
 endif
 
-if applyColor
+if isColorSchemeAvailable
   color Monokai
 endif
 
@@ -182,27 +211,6 @@ set imsearch=-1
 "autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 "autocmd FileType c set omnifunc=ccomplete#Complete
 
-" ============ Tlist ================"
-
-"if isWindows 
-    "let Tlist_Ctags_Cmd="$HOME/vimfiles"
-"endif
-""let Tlist_Auto_Open = 1
-""let Tlist_Auto_Highlight_Tag = 1
-""let Tlist_Inc_Winwidth=0
-""let Tlist_Exit_OnlyWindow = 1
-""let Tlist_Process_File_Always = 1
-""let Tlist_Compact_Format=1
-
-"let Tlist_Display_Tag_Scope = 1        "태그범위를 표시
-"let Tlist_Display_Prototype= 1            "함수원형을 표시
-"let Tlist_Sort_Type = "name"            " 태그리스트를 소스코드위치가 아닌 이름 순서로 표시
-"let Tlist_WinWidth = 35                     "태그리스트창의 폭을 35문자로 지정
-"let Tlist_File_Fold_Auto_Close = 1
-
-""set tags=./tags
-""OpenCV tags
-""TlistAddFiles *.cpp
 
 "" ============ YouCompletMe ================"
 "let g:ycm_path_to_python_interpreter = ''
