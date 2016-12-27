@@ -1,6 +1,7 @@
 " Last edited: Dec 27. 2016
 " clone this repository to $HOME/.vim (OSX) or $HOME/vimfiles (Windows) and
 " :PluginInstall
+" Issue: Errors on Windows git bash - https://github.com/VundleVim/Vundle.vim/wiki#e484-cant-open-file-cusersuseridappdatalocaltemp-error
 
 let isWindows=has("win32") || has("win64")
 let isMac=has("gui_macvim") || has("macunix") || has("mac")
