@@ -32,12 +32,15 @@ Plugin 'flazz/vim-colorschemes'
 " vim-scripts repos
 Plugin 'L9'
 
+"============ Fugitive.vim ============
+Plugin 'tpope/vim-fugitive'
+":Git, :Gstatus, :Gcommit, :Gbrowse, :Gread, :Ggrep, :Gmove..
+
 "============ NerdTree ============
 " Open/Close    :NERDTreeToggle
 " CheatSheet    https://www.cheatography.com/stepk/cheat-sheets/vim-nerdtree/
 Plugin 'scrooloose/nerdtree'
 cabbrev ntt NERDTreeToggle
-map <silent> <C-k>b :NERDTreeToggle<CR>
 if !isWindows
   "Does not support windows
   Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -56,9 +59,6 @@ map <A-/> <leader>c<space>
   "map <A-/> <leader>c<space>
 "endif
 
-"============ Fugitive.vim ============
-Plugin 'tpope/vim-fugitive'
-":Git, :Gstatus, :Gcommit, :Gbrowse, :Gread, :Ggrep, :Gmove..
 
 "============ Easymotion ============
 " <leader><leader>wbjk
@@ -92,27 +92,30 @@ cabbrev tt TagbarToggle
 if has('python')
   Plugin 'SirVer/ultisnips'
   Plugin 'honza/vim-snippets'
+  let g:UltiSnipsExpandTrigger="<tab>"
 endif
+
 
 "============ Delimitmate ================"
 Plugin 'raimondi/delimitMate'
 
-"============ Sparkup ================"
-if has('python')
-  Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-endif
+"============ Emmet ================"
+" Trigger: <C-y>,
+Plugin 'mattn/emmet-vim'
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
 
-"" Only for MAC
-if isMac
+"============ YouCompleteMe ================"
   "Plugin 'Valloric/YouCompleteMe'
 "   https://github.com/Valloric/YouCompleteMe#full-installation-guide
 "
 "   The way to compile
 "   cd ~/.vim/bundle/YouCompleteMe
 "   ./install.py --clang-completer --omnisharp-completer --gocode-completer
-" cocoa
-  Plugin 'b4winckler/vim-objc'
-  Plugin 'cocoa.vim'
+"
+
+"" Only for MAC
+if isMac
 endif
 
 call vundle#end()
