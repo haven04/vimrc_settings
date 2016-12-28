@@ -1,13 +1,20 @@
-" Last edited: Dec 27. 2016
+" Last edited: Dec 28. 2016
+" Written by Jimin Jeon.
 " clone this repository to $HOME/.vim (OSX) or $HOME/vimfiles (Windows) and
 " :PluginInstall
-" Issue: Errors on Windows git bash - https://github.com/VundleVim/Vundle.vim/wiki#e484-cant-open-file-cusersuseridappdatalocaltemp-error
+"
+" Ref: Errors on Windows git bash - https://github.com/VundleVim/Vundle.vim/wiki#e484-cant-open-file-cusersuseridappdatalocaltemp-error
+"
 
 let isWindows=has("win32") || has("win64")
+if isWindows
+  let &shell='cmd.exe'
+endif
+
 let isMac=has("gui_macvim") || has("macunix") || has("mac")
 
 "=======================Vundle settings=================================="
-set nocompatible               " be iMproved
+set nocompatible
 filetype off                   " required!
 
 if isWindows
@@ -54,7 +61,7 @@ Plugin 'tpope/vim-fugitive'
 ":Git, :Gstatus, :Gcommit, :Gbrowse, :Gread, :Ggrep, :Gmove..
 
 "============ Easymotion ============
-" <leader><leader>wbhjkl
+" <leader><leader>wbjk
 Plugin 'Lokaltog/vim-easymotion'
 
 ""============ A.vim ============
@@ -77,7 +84,7 @@ Plugin 'matchit.zip'
 Plugin 'majutsushi/tagbar'
 
 if isWindows
-    let g:tagbar_ctags_bin='$HOME\vimfiles\ctags.exe'
+    let g:tagbar_ctags_bin='~/vimfiles/ctags.exe'
 endif
 cabbrev tt TagbarToggle
 
@@ -127,8 +134,7 @@ filetype plugin indent on     " required!
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,euc-kr,cp949
-set termencoding=utf-8
-let mapleader=' '
+map <space> <leader>
 
 let isColorSchemeAvailable=0
 if has("gui_running")
@@ -156,6 +162,7 @@ if isWindows
     let isColorSchemeAvailable=1
     nnoremap <Char-0x07F> <c-r>=Backspace()<CR>
     inoremap <Char-0x07f> <c-r>=Backspace()<CR>
+    set termencoding=utf-8
 
     func! Backspace()
       if col('.') == 1
