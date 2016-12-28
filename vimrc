@@ -49,11 +49,11 @@ let NERDTreeShowHidden=1
 "[count]<leader>cc |NERDComComment| Comment out the current line or text selected in visual mode.
 "[count]<leader>cu |NERDComUncommentLine| Uncomments the selected line(s).
 Plugin 'The-NERD-Commenter'
-if isWindows
-  map <A-/> <leader>c<space>
-endif
+map <A-/> <leader>c<space>
+"if isWindows
+"endif
 "if isMac
-  "map <T-/> <leader>c<space>
+  "map <A-/> <leader>c<space>
 "endif
 
 "============ Fugitive.vim ============
@@ -137,12 +137,14 @@ set fileencodings=utf-8,euc-kr,cp949
 map <space> <leader>
 
 let isColorSchemeAvailable=0
-if has("gui_running")
+set t_Co=256
+set background=dark
+
+if isMac
+  set gfn=Menlo:h12
   let isColorSchemeAvailable=1
-else
-  set t_Co=256
-  set background=dark
 endif
+
 
 " FOR WINDOWS
 if isWindows
@@ -153,6 +155,10 @@ if isWindows
   source $VIMRUNTIME/menu.vim
   source $VIMRUNTIME/mswin.vim
   behave mswin
+
+  if has("gui_running")
+    let isColorSchemeAvailable=1
+  endif
 
   if !empty($ConEmuBaseDir)
     set term=xterm
@@ -176,9 +182,6 @@ if isWindows
       endif
     endfunc
   endif
-
-else
-  set gfn=Menlo:h12
 endif
 
 if isColorSchemeAvailable
@@ -208,6 +211,9 @@ set noimd
 set iminsert=1
 set imsearch=-1
 
+"no bells
+set noerrorbells
+set vb t_vb=
 
 " let filetype_m='objc'
 " let filetype_mm='objc'
