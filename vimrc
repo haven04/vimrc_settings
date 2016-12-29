@@ -52,19 +52,18 @@ let NERDTreeShowHidden=1
 "[count]<leader>cc |NERDComComment| Comment out the current line or text selected in visual mode.
 "[count]<leader>cu |NERDComUncommentLine| Uncomments the selected line(s).
 Plugin 'The-NERD-Commenter'
-map <A-/> <leader>c<space>
+"map <A-/> <leader>c<space>
 "if isWindows
 "endif
 "if isMac
   "map <A-/> <leader>c<space>
 "endif
 
-
 "============ Easymotion ============
 " <leader><leader>wbjk
 Plugin 'Lokaltog/vim-easymotion'
 
-""============ A.vim ============
+""============ A.vim ===========
 " For C/C++, https://github.com/vim-scripts/a.vim
 " :A switches to the header file corresponding to the current file being edited (or vise versa)
 " :AS splits and switches
@@ -95,6 +94,20 @@ if has('python')
   let g:UltiSnipsExpandTrigger="<tab>"
 endif
 
+"============ autoformat ================"
+"Plugin 'Chiel92/vim-autoformat'
+
+"============ CtrlP ================"
+"Plugin 'ctrlpvim/ctrlp.vim'
+
+"============ YouCompleteMe ================"
+  "Plugin 'Valloric/YouCompleteMe'
+"   https://github.com/Valloric/YouCompleteMe#full-installation-guide
+"
+"   The way to compile
+"   cd ~/.vim/bundle/YouCompleteMe
+"   ./install.py --clang-completer --omnisharp-completer --gocode-completer
+"
 
 "============ Delimitmate ================"
 Plugin 'raimondi/delimitMate'
@@ -105,14 +118,6 @@ Plugin 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 
-"============ YouCompleteMe ================"
-  "Plugin 'Valloric/YouCompleteMe'
-"   https://github.com/Valloric/YouCompleteMe#full-installation-guide
-"
-"   The way to compile
-"   cd ~/.vim/bundle/YouCompleteMe
-"   ./install.py --clang-completer --omnisharp-completer --gocode-completer
-"
 
 "" Only for MAC
 if isMac
@@ -138,6 +143,8 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,euc-kr,cp949
 map <space> <leader>
+" for easymotion
+map <space><space> <leader><leader>
 
 let isColorSchemeAvailable=0
 set t_Co=256
@@ -147,7 +154,6 @@ if isMac
   set gfn=Menlo:h12
   let isColorSchemeAvailable=1
 endif
-
 
 " FOR WINDOWS
 if isWindows
