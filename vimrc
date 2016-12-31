@@ -1,4 +1,4 @@
-" Last edited: Dec 28. 2016
+" Last edited: Dec 31. 2016
 " Written by Jimin Jeon.
 " clone this repository to $HOME/.vim (OSX) or $HOME/vimfiles (Windows) and
 " :PluginInstall
@@ -7,11 +7,12 @@
 "
 
 let isWindows=has("win32") || has("win64")
+let isMac=has("gui_macvim") || has("macunix") || has("mac")
+let hasPythonSupport=has('python') || has('python3')
+
 if isWindows
   let &shell='cmd.exe'
 endif
-
-let isMac=has("gui_macvim") || has("macunix") || has("mac")
 
 "=======================Vundle settings=================================="
 set nocompatible
@@ -88,7 +89,7 @@ endif
 cabbrev tt TagbarToggle
 
 "============ Ultisnips ================"
-if has('python')
+if hasPythonSupport
   Plugin 'SirVer/ultisnips'
   Plugin 'honza/vim-snippets'
   let g:UltiSnipsExpandTrigger="<tab>"
