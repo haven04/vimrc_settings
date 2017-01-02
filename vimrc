@@ -47,6 +47,7 @@ if !isWindows
   Plugin 'Xuyuanp/nerdtree-git-plugin'
 endif
 let NERDTreeShowHidden=1
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "============ NERDCommenter ============
 "[count]<leader>c<space> |NERDComToggleComment|
@@ -75,11 +76,22 @@ Plugin 'a.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 let g:airline_theme='molokai'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_tab_type = 1
+"let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
+let g:airline#extensions#tabline#show_close_button = 0
+
 set laststatus=2
 
 "============ MatchIt ============
 "HTML/Latex TAG Matcher
 Plugin 'matchit.zip'
+
 "============ Tagbar ================"
 Plugin 'majutsushi/tagbar'
 
@@ -99,10 +111,15 @@ endif
 "Plugin 'Chiel92/vim-autoformat'
 
 "============ CtrlP ================"
-"Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+" :help ctrlp-mappings
+" <c-f> and <c-b> to cycle between modes.
+" <c-d> to switch to filename only search instead of full path.
+" Use <c-j>, <c-k> or the arrow keys to navigate the result list.
+
 
 "============ YouCompleteMe ================"
-  "Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 "   https://github.com/Valloric/YouCompleteMe#full-installation-guide
 "
 "   The way to compile
@@ -152,7 +169,7 @@ set t_Co=256
 set background=dark
 
 if isMac
-  set gfn=Menlo:h12
+  set gfn=Menlo\ For\ Powerline:h12
   let isColorSchemeAvailable=1
 endif
 
@@ -225,16 +242,11 @@ set imsearch=-1
 set noerrorbells
 set vb t_vb=
 
-" let filetype_m='objc'
-" let filetype_mm='objc'
-"autocmd FileType python set omnifunc=pythoncomplete#Complete
-"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-"autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-"autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-"autocmd FileType c set omnifunc=ccomplete#Complete
-
+"buffer
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
 
 "" ============ YouCompletMe ================"
 "let g:ycm_path_to_python_interpreter = ''
