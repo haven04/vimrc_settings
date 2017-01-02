@@ -176,7 +176,7 @@ endif
 " FOR WINDOWS
 if isWindows
   set langmenu=en_US.utf-8
-  set gfn=Consolas:h10
+  set gfn=Powerline\ Consolas:h10
   let $LANG = 'en_US.UTF-8'
   source $VIMRUNTIME/delmenu.vim
   source $VIMRUNTIME/menu.vim
