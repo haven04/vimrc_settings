@@ -7,3 +7,6 @@
 [submodule "fonts/consolas-font-for-powerline"]
 	path = fonts/consolas-font-for-powerline
 	url = https://github.com/runsisi/consolas-font-for-powerline.git
+[submodule "fonts/powerline"]
+	path = fonts/powerline
+	url = https://github.com/powerline/fonts.git
