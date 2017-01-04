@@ -119,12 +119,14 @@ Plugin 'ctrlpvim/ctrlp.vim'
 
 
 "============ YouCompleteMe ================"
-" Plugin 'Valloric/YouCompleteMe'
+if hasPythonSupport
+  Plugin 'Valloric/YouCompleteMe'
+endif
 "   https://github.com/Valloric/YouCompleteMe#full-installation-guide
 "
 "   The way to compile
 "   cd ~/.vim/bundle/YouCompleteMe
-"   ./install.py --clang-completer --omnisharp-completer --gocode-completer
+"   ./install.py --all
 "
 
 "============ Delimitmate ================"
@@ -164,16 +166,15 @@ map <space> <leader>
 " for easymotion
 map <space><space> <leader><leader>
 
-let isColorSchemeAvailable=0
 set t_Co=256
-set background=dark
+"set background=dark
 
+let isColorSupported = has("gui_running")
 if isMac
+  let isColorSupported = 1
   set gfn=Menlo\ For\ Powerline:h12
-  let isColorSchemeAvailable=1
 endif
 
-" FOR WINDOWS
 if isWindows
   set langmenu=en_US.utf-8
   set gfn=Powerline\ Consolas:h10
@@ -182,37 +183,48 @@ if isWindows
   source $VIMRUNTIME/menu.vim
   source $VIMRUNTIME/mswin.vim
   behave mswin
+endif
 
-  if has("gui_running")
-    let isColorSchemeAvailable=1
-  endif
+" FOR WINDOWS - bash
+if !empty($ConEmuBaseDir)
+  let isColorSupported = 1
+  set termencoding=utf-8
+  inoremap <Char-0x07f> <BS>
+  nnoremap <Char-0x07F> <BS>
 
-  if !empty($ConEmuBaseDir)
+  let &t_ti.="\e[1 q"
+  let &t_SI.="\e[5 q"
+  let &t_EI.="\e[1 q"
+  let &t_te.="\e[0 q"
+
+  if isWindows
     set term=xterm
     set t_Co=256
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
-    let isColorSchemeAvailable=1
-    nnoremap <Char-0x07F> <c-r>=Backspace()<CR>
-    inoremap <Char-0x07f> <c-r>=Backspace()<CR>
-    set termencoding=utf-8
-
-    func! Backspace()
-      if col('.') == 1
-        if line('.')  != 1
-          return  "\<ESC>kA\<Del>"
-        else
-          return ""
-        endif
-      else
-        return "\<Left>\<Del>"
-      endif
-    endfunc
   endif
+
+  if !isWindows
+    "set term=xterm-256color
+  endif
+
+  "inoremap <Char-0x07f> <c-r>=Backspace()<CR>
+  "nnoremap <Char-0x07F> <c-r>=Backspace()<CR>
+  "func! Backspace()
+    "if col('.') == 1
+      "if line('.')  != 1
+        "return  "\<ESC>kA\<Del>"
+      "else
+        "return ""
+      "endif
+    "else
+      "return "\<Left>\<Del>"
+    "endif
+  "endfunc
 endif
 
-if isColorSchemeAvailable
-  color Monokai
+if isColorSupported
+  color ZenBurn
 endif
 
 "set nocp
