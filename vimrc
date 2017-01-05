@@ -169,9 +169,9 @@ map <space><space> <leader><leader>
 set t_Co=256
 "set background=dark
 
-let isColorSupported = has("gui_running")
+let isColorSupported = has("gui_running") || $TERM=='xterm-256color'
+
 if isMac
-  let isColorSupported = 1
   set gfn=Menlo\ For\ Powerline:h12
 endif
 
@@ -187,7 +187,6 @@ endif
 
 " FOR WINDOWS - bash
 if !empty($ConEmuBaseDir)
-  let isColorSupported = 1
   set termencoding=utf-8
   inoremap <Char-0x07f> <BS>
   nnoremap <Char-0x07F> <BS>
@@ -198,33 +197,16 @@ if !empty($ConEmuBaseDir)
   let &t_te.="\e[0 q"
 
   if isWindows
+    let isColorSupported = 1
     set term=xterm
     set t_Co=256
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
   endif
-
-  if !isWindows
-    "set term=xterm-256color
-  endif
-
-  "inoremap <Char-0x07f> <c-r>=Backspace()<CR>
-  "nnoremap <Char-0x07F> <c-r>=Backspace()<CR>
-  "func! Backspace()
-    "if col('.') == 1
-      "if line('.')  != 1
-        "return  "\<ESC>kA\<Del>"
-      "else
-        "return ""
-      "endif
-    "else
-      "return "\<Left>\<Del>"
-    "endif
-  "endfunc
 endif
 
 if isColorSupported
-  color ZenBurn
+  color zenburn
 endif
 
 "set nocp
