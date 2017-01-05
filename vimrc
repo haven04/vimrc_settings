@@ -42,10 +42,7 @@ Plugin 'tpope/vim-fugitive'
 " CheatSheet    https://www.cheatography.com/stepk/cheat-sheets/vim-nerdtree/
 Plugin 'scrooloose/nerdtree'
 cabbrev ntt NERDTreeToggle
-if !isWindows
-  "Does not support windows
-  Plugin 'Xuyuanp/nerdtree-git-plugin'
-endif
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 let NERDTreeShowHidden=1
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -99,6 +96,9 @@ if isWindows
     let g:tagbar_ctags_bin='~/vimfiles/ctags.exe'
 endif
 cabbrev tt TagbarToggle
+
+"=========== Bufferline ================"
+Plugin 'bling/vim-bufferline'
 
 "============ Ultisnips ================"
 if hasPythonSupport
