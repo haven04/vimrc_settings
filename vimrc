@@ -16,7 +16,7 @@ endif
 
 "=======================Vundle settings=================================="
 set nocompatible
-filetype off                   " required!
+filetype off " required!
 
 if isWindows
   set rtp+=~/vimfiles/bundle/Vundle.vim/
@@ -35,7 +35,23 @@ Plugin 'L9'
 
 "============ Fugitive.vim ============
 Plugin 'tpope/vim-fugitive'
+set diffopt+=vertical
 ":Git, :Gstatus, :Gcommit, :Gbrowse, :Gread, :Ggrep, :Gmove..
+
+"============ vim-signify ============
+Plugin 'mhinz/vim-signify'
+
+let g:signify_vcs_list              = [ 'git', 'hg' ]
+let g:signify_cursorhold_insert     = 1
+let g:signify_cursorhold_normal     = 1
+let g:signify_update_on_bufenter    = 0
+let g:signify_update_on_focusgained = 1
+set updatetime=1000
+
+"============ vim-indent-guides ============
+Plugin 'nathanaelkane/vim-indent-guides'
+"============ vim-indentline ============
+"Plugin 'yggdroot/indentline'
 
 "============ NerdTree ============
 " Open/Close    :NERDTreeToggle
@@ -93,7 +109,7 @@ Plugin 'matchit.zip'
 Plugin 'majutsushi/tagbar'
 
 if isWindows
-    let g:tagbar_ctags_bin='~/vimfiles/ctags.exe'
+  let g:tagbar_ctags_bin='~/vimfiles/ctags.exe'
 endif
 cabbrev tt TagbarToggle
 
@@ -129,7 +145,31 @@ endif
 "   ./install.py --all
 "
 
+"============ Ack.vim ================"
+Plugin 'mileszs/ack.vim'
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+noremap <Leader>a :Ack <cword><cr>
+
+":Ack [options] {pattern} [{directories}]}
+"?    a quick summary of these keys, repeat to close
+"o    to open (same as Enter)
+"O    to open and close the quickfix window
+"go   to preview file, open but maintain focus on ack.vim results
+"t    to open in new tab
+"T    to open in new tab without moving to it
+"h    to open in horizontal split
+"H    to open in horizontal split, keeping focus on the results
+"v    to open in vertical split
+"gv   to open in vertical split, keeping focus on the results
+"q    to close the quickfix window
+
+"============ Vim-Better-Whitespace ================"
+Plugin 'ntpeters/vim-better-whitespace'
+
 "============ Delimitmate ================"
+"Automatic closing of parenthesis, quotes and brackets
 Plugin 'raimondi/delimitMate'
 
 "============ Emmet ================"
@@ -137,7 +177,6 @@ Plugin 'raimondi/delimitMate'
 Plugin 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
-
 
 "" Only for MAC
 if isMac
@@ -159,11 +198,14 @@ filetype plugin indent on     " required!
 
 "======================================================================="
 
+syntax on
+filetype plugin on
+
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,euc-kr,cp949
 map <space> <leader>
-" for easymotion
+"for easymotion
 map <space><space> <leader><leader>
 
 set t_Co=256
@@ -179,6 +221,7 @@ if isWindows
   set langmenu=en_US.utf-8
   set gfn=Powerline\ Consolas:h10
   let $LANG = 'en_US.UTF-8'
+  set shellslash
   source $VIMRUNTIME/delmenu.vim
   source $VIMRUNTIME/menu.vim
   source $VIMRUNTIME/mswin.vim
@@ -196,6 +239,7 @@ if !empty($ConEmuBaseDir)
   let &t_EI.="\e[1 q"
   let &t_te.="\e[0 q"
 
+  "Cmd
   if isWindows
     let isColorSupported = 1
     set term=xterm
@@ -205,9 +249,16 @@ if !empty($ConEmuBaseDir)
   endif
 endif
 
+
+
 if isColorSupported
   color zenburn
 endif
+
+set list
+"set listchars=tab:▸\ ,space:·,trail:·,nbsp:·,eol:¬
+set listchars=tab:▸\ ,space:·,nbsp:·,eol:¬
+hi! link SpecialKey NonText
 
 "set nocp
 set number
@@ -217,16 +268,12 @@ set shiftwidth=2 "sw"
 set tabstop=2 "ts"
 set softtabstop=2 "sts"
 set smartindent
-
 set hlsearch
 set ignorecase
 set smartcase
 set showmatch
-
 set foldmethod=marker
 
-syntax on
-filetype plugin on
 
 set noimd
 set iminsert=1
@@ -236,11 +283,17 @@ set imsearch=-1
 set noerrorbells
 set vb t_vb=
 
-"buffer
+"buffers
 nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> ]B :blast<CR>
+
+"tabs
+nnoremap <silent> [t :tabprevious<CR>
+nnoremap <silent> ]t :tabnext<CR>
+nnoremap <silent> [T :tabfirst<CR>
+nnoremap <silent> ]T :tablast<CR>
 
 "" ============ YouCompletMe ================"
 "let g:ycm_path_to_python_interpreter = ''
@@ -250,3 +303,4 @@ augroup autoreload_vimrc " {{{
   autocmd!
   autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
 augroup END " }}}
+
