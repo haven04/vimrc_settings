@@ -1,4 +1,4 @@
-" Last edited: Dec 31. 2016
+" Last edited: Jan 10. 2017
 " Written by Jimin Jeon.
 " clone this repository to $HOME/.vim (OSX) or $HOME/vimfiles (Windows) and
 " :PluginInstall
@@ -12,6 +12,7 @@ let hasPythonSupport=has('python') || has('python3')
 
 if isWindows
   let &shell='cmd.exe'
+  set shellslash
 endif
 
 "=======================Vundle settings=================================="
@@ -50,8 +51,6 @@ set updatetime=1000
 
 "============ vim-indent-guides ============
 Plugin 'nathanaelkane/vim-indent-guides'
-"============ vim-indentline ============
-"Plugin 'yggdroot/indentline'
 
 "============ NerdTree ============
 " Open/Close    :NERDTreeToggle
@@ -120,7 +119,8 @@ Plugin 'bling/vim-bufferline'
 if hasPythonSupport
   Plugin 'SirVer/ultisnips'
   Plugin 'honza/vim-snippets'
-  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 endif
 
 "============ autoformat ================"
@@ -133,11 +133,17 @@ Plugin 'ctrlpvim/ctrlp.vim'
 " <c-d> to switch to filename only search instead of full path.
 " Use <c-j>, <c-k> or the arrow keys to navigate the result list.
 
+"============ SuperTab ================"
+Plugin 'ervandew/supertab'
 
 "============ YouCompleteMe ================"
 if hasPythonSupport
   Plugin 'Valloric/YouCompleteMe'
 endif
+
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
 "   https://github.com/Valloric/YouCompleteMe#full-installation-guide
 "
 "   The way to compile
@@ -221,7 +227,6 @@ if isWindows
   set langmenu=en_US.utf-8
   set gfn=Powerline\ Consolas:h10
   let $LANG = 'en_US.UTF-8'
-  set shellslash
   source $VIMRUNTIME/delmenu.vim
   source $VIMRUNTIME/menu.vim
   source $VIMRUNTIME/mswin.vim
@@ -247,9 +252,12 @@ if !empty($ConEmuBaseDir)
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
   endif
+
+  "tmux
+  if !empty($TMUX)
+    let isColorSupported = 1
+  endif
 endif
-
-
 
 if isColorSupported
   color zenburn
@@ -258,6 +266,7 @@ endif
 set list
 "set listchars=tab:▸\ ,space:·,trail:·,nbsp:·,eol:¬
 set listchars=tab:▸\ ,space:·,nbsp:·,eol:¬
+hi clear SpecialKey
 hi! link SpecialKey NonText
 
 "set nocp
