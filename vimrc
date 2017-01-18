@@ -9,8 +9,10 @@
 let isWindows=has("win32") || has("win64")
 let isMac=has("gui_macvim") || has("macunix") || has("mac")
 let hasPythonSupport=has('python') || has('python3')
+let $VIMHOME = '~/.vim'
 
 if isWindows
+  let $VIMHOME = '~/vimfiles'
   let &shell='cmd.exe'
   set shellslash
 endif
@@ -19,14 +21,9 @@ endif
 set nocompatible
 filetype off " required!
 
-if isWindows
-  set rtp+=~/vimfiles/bundle/Vundle.vim/
-  let path='~/vimfiles/bundle'
-  call vundle#begin(path)
-else
-  set rtp+=~/.vim/bundle/Vundle.vim
-  call vundle#begin()
-endif
+set rtp+=$VIMHOME/bundle/Vundle.vim/
+let path = $VIMHOME.'/bundle'
+call vundle#begin(path)
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
@@ -108,7 +105,7 @@ Plugin 'matchit.zip'
 Plugin 'majutsushi/tagbar'
 
 if isWindows
-  let g:tagbar_ctags_bin='~/vimfiles/ctags.exe'
+  let g:tagbar_ctags_bin=$VIMHOME.'/ctags.exe'
 endif
 cabbrev tt TagbarToggle
 
@@ -139,12 +136,15 @@ Plugin 'ervandew/supertab'
 "============ YouCompleteMe ================"
 if hasPythonSupport
   Plugin 'Valloric/YouCompleteMe'
-endif
 
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-"   https://github.com/Valloric/YouCompleteMe#full-installation-guide
+  let g:ycm_global_ycm_extra_conf = $VIMHOME.'/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+  let g:ycm_python_binary_path = 'python'
+  let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+  let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+  let g:SuperTabDefaultCompletionType = '<C-n>'
+endif
+"   https://github.com/Valloric/YouCompleteMe
+"   https://github.com/rdnetto/YCM-Generator
 "
 "   The way to compile
 "   cd ~/.vim/bundle/YouCompleteMe
