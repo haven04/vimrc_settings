@@ -156,7 +156,7 @@ Plugin 'mileszs/ack.vim'
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-noremap <Leader>a :Ack <cword><cr>
+noremap <Leader>a :Ack! <cword><cr>
 
 ":Ack [options] {pattern} [{directories}]}
 "?    a quick summary of these keys, repeat to close
