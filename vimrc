@@ -184,6 +184,16 @@ Plugin 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 
+"============ Markdown ================"
+Plugin 'tpope/vim-markdown'
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'cpp']
+
+Plugin 'suan/vim-instant-markdown'
+let g:instant_markdown_slow = 1
+"Install - https://github.com/suan/vim-instant-markdown 
+
+
 "" Only for MAC
 if isMac
 endif
