@@ -137,7 +137,7 @@ Plugin 'ervandew/supertab'
 if hasPythonSupport
   Plugin 'Valloric/YouCompleteMe'
 
-  let g:ycm_global_ycm_extra_conf = $VIMHOME.'/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+  let g:ycm_global_ycm_extra_conf = $VIMHOME.'/ycm_extra_conf.py'
   let g:ycm_python_binary_path = 'python'
   let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
   let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -156,6 +156,7 @@ Plugin 'mileszs/ack.vim'
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+cnoreabbrev Ack Ack!
 noremap <Leader>a :Ack! <cword><cr>
 
 ":Ack [options] {pattern} [{directories}]}
@@ -227,7 +228,7 @@ map <space><space> <leader><leader>
 set t_Co=256
 "set background=dark
 
-let isColorSupported = has("gui_running") || $TERM=='xterm-256color'
+let isColorSupported = has("gui_running") || $TERM=='xterm-256color' 
 
 if isMac
   set gfn=Menlo\ For\ Powerline:h12
