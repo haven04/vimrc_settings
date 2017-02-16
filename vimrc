@@ -137,7 +137,7 @@ Plugin 'ervandew/supertab'
 if hasPythonSupport
   Plugin 'Valloric/YouCompleteMe'
 
-  let g:ycm_global_ycm_extra_conf = $VIMHOME.'/ycm_extra_conf.py'
+  let g:ycm_global_ycm_extra_conf= $VIMHOME.'/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
   let g:ycm_python_binary_path = 'python'
   let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
   let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -236,7 +236,7 @@ endif
 
 if isWindows
   set langmenu=en_US.utf-8
-  set gfn=Powerline\ Consolas:h10
+  set gfn=Dejavu\ Sans\ Mono\ For\ Powerline:h10
   let $LANG = 'en_US.UTF-8'
   source $VIMRUNTIME/delmenu.vim
   source $VIMRUNTIME/menu.vim
@@ -276,7 +276,8 @@ endif
 
 set list
 "set listchars=tab:▸\ ,space:·,trail:·,nbsp:·,eol:¬
-set listchars=tab:▸\ ,space:·,nbsp:·,eol:¬
+"set listchars=tab:▸\ ,space:·,nbsp:·,eol:¬
+set listchars=tab:▸\ ,eol:¬
 hi clear SpecialKey
 hi! link SpecialKey NonText
 
