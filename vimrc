@@ -142,6 +142,19 @@ if hasPythonSupport
   let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
   let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
   let g:SuperTabDefaultCompletionType = '<C-n>'
+  let g:ycm_confirm_extra_conf=0
+  let g:ycm_goto_buffer_command = 'horizontal-split'
+  let g:ycm_autoclose_preview_window_after_insertion = 1
+  let g:ycm_add_preview_to_completeopt = 1
+  nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+  nnoremap <leader>yd :YcmCompleter GoToDeclaration<CR>
+  nnoremap <leader>yg :YcmCompleter GoTo<CR>
+  nnoremap <leader>yt :YcmCompleter GetType<CR>
+  nnoremap <leader>yp :YcmCompleter GetParent<CR>
+  nnoremap <leader>yi :YcmCompleter GetDoc<CR>
+  nnoremap <leader>yf :YcmCompleter FixIt<CR>
+  cabbrev yc YcmCompleter
+  cabbrev ycd YcmDiags
 endif
 "   https://github.com/Valloric/YouCompleteMe
 "   https://github.com/rdnetto/YCM-Generator
